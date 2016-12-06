@@ -11,6 +11,6 @@ MUCH FAST, TOO EASY, WOW
 
 ``` /app/components/: $ ng g component my-component // Creates component ```
 
-``` app/components/my-component/: $ ng g component my-nested-component ```
+``` /app/components/my-component/: $ ng g component my-nested-component ```
 
 Amongst others.
