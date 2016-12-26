@@ -31,4 +31,22 @@ TestBed.configureTestingModule({
                 RouterTestingModule.withRoutes([]),
             ],
         }).compileComponents();
+
+```
         
+### Ignored service mock, uh?
+
+You may have probably included the service you want to fake inside
+```[...] providers: [] [...]```
+
+If so, Angular says that providers annotated on components are the ones, the highest level, jetset, nothing to f*ck with. You'll probably want to refactor this, in case you don't need new instances (see "ng2 services, singletons or not?") OOOOOOOOOR:
+
+```
+TestBed.overrideComponent(YourComponent, {
+    set: {
+        providers: [{ provide: YourService, useClass: YourServiceStub }]
+    }
+})
+```
+
+NAILED.
