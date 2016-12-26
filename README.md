@@ -33,7 +33,33 @@ TestBed.configureTestingModule({
         }).compileComponents();
 
 ```
-        
+
+### Route params mocking rocking
+
+So, got some parameters through URL? Gettin' them on ngOnInit? Let's mock 'em all! 
+As for this case, I expect you to have smth like:
+```
+    this.sub = this.activatedRoute.params.subscribe(params => {
+      this.challengueId = +params['challengueId']
+      this.challengue = this.challenguesService.getChallengueById(this.challengueId);     
+    });
+    
+```
+
+Yep, first override ActivatedRoute provider on the component annotations:
+```
+        providers: [
+            { provide: ActivatedRoute, useValue: { 'params': Observable.from([{ 'challengueId': 1 }]) }}
+        ]
+ ```
+ 
+ This is breaking your code. Of course, where is that Observable coming from? Import it:
+ 
+ ```import { Observable } from 'rxjs/Rx';```
+ 
+ We are subscribing to variable ([...]params.subscribe(params=>[...]) so one can not just return a variable, we make 'em observable. That's it.
+ 
+ 
 ### Ignored service mock, uh?
 
 You may have probably included the service you want to fake inside
