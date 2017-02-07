@@ -15,6 +15,79 @@ MUCH FAST, TOO EASY, WOW
 
 Amongst others.
 
+## Detecting changes on array or objects
+So, you have something like.
+
+```
+export class BufferComponent implements OnChange {
+    @Input() buffer: Array<string>;
+    
+    ngOnChange() {
+        makeSparkles();
+    }
+}
+```
+
+Oh, boy. Good luck detecting changes on that array. BREAKING NEWS: Angular2 per default only detects changes when reference changes... and pushing a new item on your beloved array won't do that.
+
+Let's detect that. So, if OnChange phase doesn't detect changes... who else would do it? Let's review life cicle:
+
+![Angular 2 Life Cicle](https://angular.io/resources/images/devguide/lifecycle-hooks/hooks-in-sequence.png)
+
+Yep, we have that DoCheck triggered during every change detection run, immediately after ngOnChanges and ngOnInit. And docs say it stands for checking WHAT ANGULAR CAN'T OR WON'T DETECT ON ITS OWN. Looks like we have a wingman.
+
+```
+export class BufferComponent implements DoCheck {
+    @Input() buffer: Array<string>;
+    
+    ngDoCheck() {
+            doSparkles()
+    }
+}
+```
+
+YAS, you got it. Sparkles everywhere on each life cycle triggered. Wait. When is a life cycle triggered then? ngDoCheck is triggered every time the input properties of a component or a directive are checked. And when they change, despite of not being detected by ngOnChanges, it's checked anyways.
+
+BUUUUUUUUT, if we have many inputs like:
+
+```
+export class BufferComponent implements DoCheck {
+    @Input() buffer: Array<string>;
+    @Input() person: string;
+    ngDoCheck() {
+            doSparkles()
+    }
+}
+```
+
+If person changes, doSparkles will be called even, and our expected behaviour was to sparkle all the sh*t out of the screen ONLY on buffer change.
+
+One last step.
+
+Add KeyPairDiffer to constructor. Generate an array differ and bound it to the components. Then check difference between this differ and buffer. Talk is cheap, let's see the code:
+
+```
+export class BufferComponent implements DoCheck {
+    @Input() buffer: Array<string>;
+    
+    differ: any;
+    
+    constructor(private elementRef: ElementRef, private differs: KeyValueDiffers) {
+      this.differ = differs.find([]).create(null);
+    }
+    
+    ngDoCheck() {
+      var changes = this.differ.diff(this.buffer);
+
+      if(changes) {
+        doSparkles();
+      }
+    }
+}
+``` 
+
+HELL YEA. Perfect. Hats off.
+
 ## Unit testing
 ### Can't bind to 'routerLink' since it isn't a known property of 'WHATEVER'
 
@@ -76,3 +149,5 @@ TestBed.overrideComponent(YourComponent, {
 ```
 
 NAILED.
+
+
