@@ -89,6 +89,21 @@ export class BufferComponent implements DoCheck {
 HELL YEA. Perfect. Hats off.
 
 ## Unit testing
+### “Error: No provider for router” while writing Karma-Jasmine unit test cases
+
+On TestBed include the following import:
+
+```
+import {RouterTestingModule} from '@angular/router/testing';
+[...]
+TestBed.configureTestingModule({
+  imports: [RouterTestingModule], <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+  declarations: [ ChooseTypePageComponent ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
+})
+```
+
+
 ### Can't bind to 'routerLink' since it isn't a known property of 'WHATEVER'
 
 Gently import RouterTestingModule:
