@@ -166,3 +166,6 @@ TestBed.overrideComponent(YourComponent, {
 NAILED.
 
 
+### Script error on Jasmine??
+
+Check if you imported CUSTOM_ELEMENTS_SCHEMA from anything else than @angular/core.
