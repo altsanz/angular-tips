@@ -15,6 +15,12 @@ MUCH FAST, TOO EASY, WOW
 
 Amongst others.
 
+## Modals and presenters/container components, binding tree, ...
+
+Great explanation about possibilities of modals deep down in presenter components. It's in React, but the concept still remains useful:
+
+https://stackoverflow.com/questions/35623656/how-can-i-display-a-modal-dialog-in-redux-that-performs-asynchronous-actions/35641680
+
 ## Detecting changes on array or objects
 So, you have something like.
 
