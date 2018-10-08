@@ -94,6 +94,65 @@ export class BufferComponent implements DoCheck {
 
 HELL YEA. Perfect. Hats off.
 
+## \*ngIf and \*ngFor
+Two structural directive (\*whatEver) on same element raises an error.
+
+You can use ngContainer to separate elements but not reflect this separation on DOM:
+
+```typescript
+<ng-container *ngIf="show">
+  <div *ngFor="let thing of stuff">
+    {{log(thing)}}
+    <span>{{thing.name}}</span>
+  </div>
+</ng-container>
+```
+
+https://stackoverflow.com/a/39565934
+
+
+## Animating selected elements value
+
+You can use \*ngFor for those use cases, even if it's just a single object.
+
+```typescript
+@Component({
+  selector: 'image-holder',
+  template: `
+    <div class="carousel-image">
+      <img [src]="image" *ngFor="let image of [image]" [@slideInRight]/>
+      <span>{{ text }}</span>
+    </div>
+  `,
+  styleUrls: ['../greenscreen.scss'],
+  animations: [
+    trigger(
+      'slideInRight',
+      [
+        transition(
+          ':enter', [
+            style({transform: 'translateX(100%)', opacity: 0}),
+            animate('500ms', style({transform: 'translateX(0)', opacity: 1}))
+          ]
+        ),
+        transition(
+          ':leave', [
+            style({transform: 'translateX(0)', 'opacity': 1}),
+            animate('500ms', style({transform: 'translateX(-100%)', opacity: 0}))
+          ]
+        )
+      ])
+  ]
+})
+export class ImageHolderComponent {
+  @Input()
+  image: string;
+  @Input()
+  text: string;
+```
+
+https://stackoverflow.com/a/43978066/1306660
+
 ## Unit testing
 ### “Error: No provider for router” while writing Karma-Jasmine unit test cases
 
@@ -170,7 +229,6 @@ TestBed.overrideComponent(YourComponent, {
 ```
 
 NAILED.
-
 
 ### Script error on Jasmine??
 
