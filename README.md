@@ -233,3 +233,18 @@ NAILED.
 ### Script error on Jasmine??
 
 Check if you imported CUSTOM_ELEMENTS_SCHEMA from anything else than @angular/core.
+
+## RXJS
+
+### Operators
+
+#### ShareReplay(n)
+
+Share + Replay(n):
+- share => when subscribed to an observable with a pipe, prevents running the pipe for each subscription. 
+- replay => emits the last (n) to late subscribers.
+
+When to use:
+- Pipes with unwanted to be repeated side-effects
+- Complex calculations
+- 
