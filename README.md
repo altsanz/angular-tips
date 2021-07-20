@@ -246,5 +246,4 @@ Share + Replay(n):
 
 When to use:
 - Pipes with unwanted to be repeated side-effects
-- Complex calculations
-- 
+- Complex calculations on pipe
