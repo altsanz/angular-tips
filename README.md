@@ -234,6 +234,15 @@ NAILED.
 
 Check if you imported CUSTOM_ELEMENTS_SCHEMA from anything else than @angular/core.
 
+## NPM
+
+### Dependencies vs devDependencies vs bundledDependencies vs peerDependencies
+
+- Force installs in consumer app => dependencies
+- Provided by library => bundledDependencies
+- Require manual install by consumer => peerDependencies
+- Invisible to consumer, not included in library => devDependencies
+
 ## RXJS
 
 ### Operators
