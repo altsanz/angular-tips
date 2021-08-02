@@ -250,7 +250,7 @@ Check if you imported CUSTOM_ELEMENTS_SCHEMA from anything else than @angular/co
 #### ShareReplay(n)
 
 Share + Replay(n):
-- share => when subscribed to an observable with a pipe, prevents running the pipe for each subscription. 
+- share => turns observable into a multicast. When subscribed to an observable with a pipe, prevents running the pipe for each subscription. 
 - replay => emits the last (n) to late subscribers.
 
 When to use:
